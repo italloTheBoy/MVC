@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 db.sync()
   .then(() => {
-    const port = process.env.PORT || 3000
+    const port = process.env.PORT ?? 3000
 
     app.listen(port, () => {
       console.log(`\nServer running in http://localhost:${port} \n`)
