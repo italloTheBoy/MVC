@@ -3,7 +3,7 @@ const express = require('express')
 const hbs = require('express-handlebars')
 const path = require('path')
 const db = require('./database/db')
-
+const Task = require('./models/Task') 
 
 // Configure the app
 const app = express()
