@@ -8,6 +8,10 @@ routes.post('/add', TaskController.createTaskSave)
 
 // READ
 routes.get('/', TaskController.readAllTasks)
+routes.get('/:id', TaskController.readOneTask)
 
+// UPDATE
+// DELETE
+routes.post('/delete', TaskController.deleteTask)
 
 module.exports = routes

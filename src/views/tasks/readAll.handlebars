@@ -11,7 +11,10 @@
 
           <div>
             <a href="/task/complete" class="bi bi-check2 list-link"></a>
-            <a href="/task/delete" class="bi bi-x-lg list-link"></a>
+            <form action="/task/delete" class="list-link" method="post">
+              <input type="hidden" name="id" value="{{ id }}">
+              <button type="submit" class="list-link"><i class="bi bi-x-lg"></i></button>
+            </form>
             <a href="/task/edit" class="bi bi-pencil-square list-link"></a>
           </div>
         </li>

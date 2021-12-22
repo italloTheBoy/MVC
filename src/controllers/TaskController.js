@@ -35,9 +35,32 @@ module.exports = class TaskController {
 
   // READ
   static async readAllTasks(req, res) {
-    await Task.findAll({raw: true})
+    await Task.findAll({
+      raw: true,
+      attribute: ['id', 'title', 'description']
+    })
       .then(task => {
         res.status(200).render('tasks/readAll', { task })
       })
+  }
+
+  static async readOneTask(req, res) {}
+
+  // UPDATE
+  // DELETE
+  static async deleteTask(req, res) {
+    const { id } = req.body
+
+    try {
+      await Task.findByPk(id, { attributes: ['id'] })
+      ? (
+        await Task.destroy({ where: { id } })
+          .then(() => res.status(200).redirect('/task'))
+        )
+      : res.status(404).redirect('/404')
+    }
+    catch (err) {
+      res.status(500).redirect('/500')
+    }
   }
 }

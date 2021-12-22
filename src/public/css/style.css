@@ -1,5 +1,30 @@
 .list-link {
+  padding: 0px 1px;
+}
+
+.list-link:hover {
+  color: rgb(72, 182, 105);
+}
+
+button.list-link {
+  background: transparent;
+  padding: 0px;
+  border: none;; 
+  outline: none;
+  cursor: pointer;
+  transition: 0.1s;
+  color: rgb(202, 199, 199);
+}
+
+
+a.list-link  {
   text-decoration: none;
   color: rgb(202, 199, 199);
   transition: 0.1s;
+}
+
+form.list-link {
+  display: inline;
+  margin: 0px;
+  padding: none;
 }
