@@ -4,7 +4,7 @@ const Task = require('../models/Task')
 module.exports = class TaskController {
   // CREATE
   static createTask(req, res) {
-    res.render('tasks/create')
+    res.status(200).render('tasks/create')
   }
 
   static async createTaskSave(req, res) {
@@ -14,7 +14,6 @@ module.exports = class TaskController {
 
     if (!title || title.trim() === '') err.title = 'Insira um título'  
     if (!description || description.trim() === '') err.description = 'Insira uma descrição'
-    console.log(err)
 
     if (Object.keys(err).length > 0) {
       res.render('tasks/create', { 
@@ -27,15 +26,18 @@ module.exports = class TaskController {
         title: title.trim().toLowerCase(),
         description: description.trim(),
       })
-        .then(() => res.redirect('/task'))
+        .then(() => res.status(200).redirect('/task'))
         .catch(err => {
-          res.redirect('/500')
+          res.status(500).redirect('/500')
         })
     }
   }
 
   // READ
-  static listTasks(req, res) {
-    res.render('tasks/list')
+  static async readAllTasks(req, res) {
+    await Task.findAll({raw: true})
+      .then(task => {
+        res.status(200).render('tasks/readAll', { task })
+      })
   }
 }

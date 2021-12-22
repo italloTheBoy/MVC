@@ -2,12 +2,12 @@ const TaskController = require('../controllers/TaskController')
 const routes = require('express').Router()
 
 
-// GET
+// CREATE
 routes.get('/add', TaskController.createTask)
-routes.get('/', TaskController.listTasks)
-
-// POST
 routes.post('/add', TaskController.createTaskSave)
+
+// READ
+routes.get('/', TaskController.readAllTasks)
 
 
 module.exports = routes

@@ -1,0 +1,5 @@
+.list-link {
+  text-decoration: none;
+  color: rgb(202, 199, 199);
+  transition: 0.1s;
+}
