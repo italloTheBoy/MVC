@@ -1,1 +1,38 @@
-<h1>Hello MVC</h1> 
+<main class="container card w-50 p-3">
+  <form action="/task/add" method="post">
+    <fieldset>
+      <legend class="form-title">Registrar Tarefa</legend> <hr>
+  
+      <label class="form-label" for="title">Titulo:</label>
+      <input
+        class="form-control" 
+        type="text" 
+        name="title" 
+        id="title" 
+        placeholder="Nome da tarefa" 
+        value="{{title}}" 
+        required
+      >
+      {{#if err.title}}
+        <p class="form-text text-danger m-0">{{ err.title }}</p>
+      {{/if}}
+
+      <label class="form-label mt-3" for="description">Descrição:</label>
+      <textarea 
+        class="form-control" 
+        type="text" 
+        name="description" 
+        id="description" 
+        placeholder="Descrição da tarefa"
+        required
+      >{{ description }}</textarea>
+      {{#if err.description}}
+        <p class="form-text text-danger">{{ err.description }}</p>
+      {{/if}}
+
+      <div class="d-grid mt-4">
+        <button class="btn btn-outline-primary" type="submit">Criar</button>
+      </div>
+    </fieldset> 
+  </form>
+</main>
