@@ -7,7 +7,7 @@ module.exports = class TaskController {
     res.status(200).render('tasks/create')
   }
 
-  static async createTaskSave(req, res) {
+  static async createTaskPost(req, res) {
     const { title, description } = req.body
 
     const err = {}
@@ -36,8 +36,10 @@ module.exports = class TaskController {
   // READ
   static async readAllTasks(req, res) {
     await Task.findAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      },
       raw: true,
-      attribute: ['id', 'title', 'description']
     })
       .then(task => {
         res.status(200).render('tasks/readAll', { task })
@@ -47,6 +49,72 @@ module.exports = class TaskController {
   static async readOneTask(req, res) {}
 
   // UPDATE
+  static async updateTask(req, res) {
+    const id = req.params.id
+
+    await Task.findByPk(id, {
+      raw: true,
+      attributes: ['id', 'title', 'description']
+    })
+      .then(task => {
+        task 
+        ? res.status(200).render('tasks/update', { task }) 
+        : res.status(404).redirect('/404')
+      })
+      .catch(err => {
+        console.log(err)
+        return res.redirect('/500')
+      })  
+  }
+
+  static async updateTaskPost(req, res) {
+    const { title, description } = req.body
+    const id = Number(req.body.id)
+
+    // Val
+    const err = {}
+
+    if (!id) err.id = 'Insira um ID'
+    else {
+      await Task.findByPk(id, { attributes: ['id'] })
+        .then(task => {
+          if (!task) err.id = 'ID não encontrado'
+        })
+        .catch(err => {
+          console.log(err)
+          return res.redirect('/500')
+        })
+    }
+
+    if (!title || title.trim() === '') err.title = 'Insira um título' 
+
+    if (!description || description.trim() === '') err.description = 'Insira uma descrição'
+
+    // Redirect
+    if (Object.keys(err).length > 0) {
+      const task = { 
+        id,
+        title: title.trim(),
+        description: description.trim(),
+      }
+
+      res.render('tasks/update', { task, err })
+    }else {
+      await Task.update({
+        title: title.trim().toLowerCase(),
+        description: description.trim(),
+      },
+      { where: { id } })
+        .catch(err => {
+          console.log(err)
+          return res.redirect('/500')
+        })
+
+      return res.status(200).redirect('/task')
+    }
+  }
+        
+
   // DELETE
   static async deleteTask(req, res) {
     const { id } = req.body

@@ -1,0 +1,43 @@
+<main class="container card w-50 p-3">
+  <form action="/task/update" method="post">
+    <fieldset>
+      <legend class="form-title">Editar Tarefa</legend> <hr>
+
+      <input type="hidden" name="id" value="{{ task.id }}">
+      {{#if err.id}}
+        <p class="form-text text-danger m-0 mb-3">{{ err.id }}</p>
+      {{/if}}
+  
+      <label class="form-label" for="title">Titulo:</label>
+      <input
+        class="form-control" 
+        type="text" 
+        name="title" 
+        id="title" 
+        placeholder="Nome da tarefa" 
+        value="{{ task.title}}" 
+        required
+      >
+      {{#if err.title}}
+        <p class="form-text text-danger m-0">{{ err.title }}</p>
+      {{/if}}
+
+      <label class="form-label mt-3" for="description">Descrição:</label>
+      <textarea 
+        class="form-control" 
+        type="text" 
+        name="description" 
+        id="description" 
+        placeholder="Descrição da tarefa"
+        required
+      >{{ task.description }}</textarea>
+      {{#if err.description}}
+        <p class="form-text text-danger">{{ err.description }}</p>
+      {{/if}}
+
+      <div class="d-grid mt-4">
+        <button class="btn btn-outline-primary" type="submit">Editar</button>
+      </div>
+    </fieldset> 
+  </form>
+</main>
