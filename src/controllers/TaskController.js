@@ -46,8 +46,6 @@ module.exports = class TaskController {
       })
   }
 
-  static async readOneTask(req, res) {}
-
   // UPDATE
   static async updateTask(req, res) {
     const id = req.params.id
@@ -68,6 +66,7 @@ module.exports = class TaskController {
   }
 
   static async updateTaskPost(req, res) {
+
     const { title, description } = req.body
     const id = Number(req.body.id)
 
@@ -113,7 +112,38 @@ module.exports = class TaskController {
       return res.status(200).redirect('/task')
     }
   }
-        
+      
+  
+  static async toggleTaskStatus(req, res) {
+    const id = req.body.id
+    let done = req.body.done 
+    let err = 0
+    
+    if (!Number(id)) err = 1
+    else {
+      await Task.findByPk(id, { attributes: ['id'] })
+        .then((data) => {
+          if (!data) err = 2
+
+          else if (['0', '1'].indexOf(done) === -1) err = 3
+          else done == '0' ? done = true : done = false
+        })
+        .catch(err => {
+          console.log(err)
+          return res.redirect('/500')
+        })
+    }
+
+    if (err != 0) {
+      console.log(err)
+      return res.status(401).redirect('/task')
+    }
+    
+    await Task.update({ done }, { where: { id } })
+
+    res.status(200).redirect('/task') 
+    
+  }
 
   // DELETE
   static async deleteTask(req, res) {

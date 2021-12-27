@@ -8,11 +8,12 @@ routes.post('/add', TaskController.createTaskPost)
 
 // READ
 routes.get('/', TaskController.readAllTasks)
-routes.get('/:id', TaskController.readOneTask)
 
 // UPDATE
 routes.get('/update/:id', TaskController.updateTask)
 routes.post('/update', TaskController.updateTaskPost)
+
+routes.post('/toggle', TaskController.toggleTaskStatus)
 
 // DELETE
 routes.post('/delete', TaskController.deleteTask)

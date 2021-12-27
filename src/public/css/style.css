@@ -3,7 +3,7 @@
 }
 
 .list-link:hover {
-  color: rgb(72, 182, 105);
+  color: rgb(72, 147, 182);
 }
 
 button.list-link {
@@ -27,4 +27,8 @@ form.list-link {
   display: inline;
   margin: 0px;
   padding: none;
+}
+
+.done-1 {
+  color:rgb(44, 197, 64)
 }

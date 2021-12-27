@@ -7,14 +7,21 @@
     <ul class="list-group list-group-flush">
       {{#each task}}
         <li class="list-group-item d-flex">
-          <a href="/task/{{ id }}" class="fw-normal card-title flex-grow-1 text-capitalize list-link">{{ title }}</a>
+          <p class="fw-normal card-title flex-grow-1 text-capitalize list-link">{{ title }}</p>
 
           <div>
-            <a href="/task/complete" class="bi bi-check2 list-link"></a>
+            <form action="/task/toggle" class="list-link" method="post">
+              <input type="hidden" name="id" value="{{ id }}">
+              <input type="hidden" name="done" value="{{ done }}">
+              
+              <button type="submit" class="list-link"><i class="bi bi-check2 list-link done-{{done}}"></i></button>
+            </form> 
+
             <form action="/task/delete" class="list-link" method="post">
               <input type="hidden" name="id" value="{{ id }}">
               <button type="submit" class="list-link"><i class="bi bi-x-lg"></i></button>
             </form>
+
             <a href="/task/update/{{ id }}" class="bi bi-pencil-square list-link"></a>
           </div>
         </li>
